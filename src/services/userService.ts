@@ -35,7 +35,15 @@ async function signIn(loginData: UserLoginData) {
   return token;
 }
 
+async function findById(id: number) {
+  const user = await userRepository.findById(id);
+  if (!user) throw notFoundError("Usuário não encontado");
+
+  return user;
+}
+
 export default {
   signUp,
   signIn,
+  findById,
 };

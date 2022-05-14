@@ -24,6 +24,8 @@ model Category {
   name      String  @unique
   isDefault Boolean
 
+  payments Payment[]
+
   @@map("categories")
 }
 
@@ -42,4 +44,16 @@ model Deposit {
   date        DateTime @default(now())
 
   @@map("deposits")
+}
+
+model Payment {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  price       Int
+  date        DateTime @default(now())
+  category    Category @relation(fields: [categoryId], references: [id])
+  categoryId  Int
+
+  @@map("payments")
 }

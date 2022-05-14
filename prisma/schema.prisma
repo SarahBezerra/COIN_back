@@ -33,3 +33,13 @@ model CategoryColor {
 
   @@map("categoryColors")
 }
+
+model Deposit {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String
+  price       Int
+  date        DateTime @default(now())
+
+  @@map("deposits")
+}

@@ -7,5 +7,6 @@ import { paymentSchema } from "../schemas/paymentSchema.js";
 const paymentRouter = Router();
 
 paymentRouter.post("/create-payment", ensureAuthenticatedMiddleware, validateSchemaMiddleware(paymentSchema), paymentController.createPayment);
+paymentRouter.get("/payments", ensureAuthenticatedMiddleware, paymentController.getPayments);
 
 export default paymentRouter;

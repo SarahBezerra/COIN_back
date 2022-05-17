@@ -16,28 +16,28 @@ model User {
   username String
   password String
 
+  Deposit  Deposit[]
+  Payment  Payment[]
+  Category Category[]
   @@map("users")
 }
 
 model Category {
-  id        Int     @id @default(autoincrement())
-  name      String  @unique
-  isDefault Boolean
+  id     Int    @id @default(autoincrement())
+  name   String
+  User   User   @relation(fields: [userId], references: [id])
+  userId Int
+  color  String
+  icon   String
 
-  payments Payment[]
-
+  Payment Payment[]
   @@map("categories")
-}
-
-model CategoryColor {
-  id          Int    @id @default(autoincrement())
-  hexadecimal String @unique
-
-  @@map("categoryColors")
 }
 
 model Deposit {
   id          Int      @id @default(autoincrement())
+  User        User     @relation(fields: [userId], references: [id])
+  userId      Int
   title       String
   description String
   price       Int
@@ -48,11 +48,13 @@ model Deposit {
 
 model Payment {
   id          Int      @id @default(autoincrement())
+  User        User     @relation(fields: [userId], references: [id])
+  userId      Int
   title       String
   description String
   price       Int
   date        DateTime @default(now())
-  category    Category @relation(fields: [categoryId], references: [id])
+  categories  Category @relation(fields: [categoryId], references: [id])
   categoryId  Int
 
   @@map("payments")

@@ -3,8 +3,9 @@ import depositService from "../services/depositService.js";
 
 async function createDeposit(req: Request, res: Response) {
   const deposit = req.body;
+  const {user} = res.locals;
 
-  await depositService.createDeposit(deposit);
+  await depositService.createDeposit(deposit, user);
 
   res.sendStatus(201);
 }

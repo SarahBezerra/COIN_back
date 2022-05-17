@@ -4,15 +4,48 @@ async function getCategories() {
   return prisma.category.findMany();
 }
 
-async function findCategoryByName(name:string) {
-  return prisma.category.findUnique({
+async function findCategoryByName(name:string, userId: number) {
+  return prisma.category.findFirst({
     where: {
-      name
+      userId,
+      name,
     }
   })
+}
+
+async function createDefaultCategories(userId: number) {
+  return prisma.category.createMany({
+    data: [
+      {
+        name: "Pet",
+        userId,
+        color: "F08080",
+        icon: "paw-outline",
+      },
+      {
+        name: "Alimentação",
+        userId,
+        color: "8B0000",
+        icon: "fast-food-outline",
+      },
+      {
+        name: "Estudos",
+        userId,
+        color: "FFA500",
+        icon: "library-outline",
+      },
+      {
+        name: "Trasporte",
+        userId,
+        color: "008B8B",
+        icon: "bus-outline",
+      },
+    ]
+  });
 }
 
 export default {
   getCategories,
   findCategoryByName,
+  createDefaultCategories,
 };

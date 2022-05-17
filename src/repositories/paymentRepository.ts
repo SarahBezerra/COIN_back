@@ -1,11 +1,12 @@
-import { Payment } from "@prisma/client";
+import { Payment, User } from "@prisma/client";
 import { prisma } from "../database.js";
 
 export type CreatePayment = Omit<Payment, "id">;
 
-async function createPayment({ title, description, price, date, categoryId }:CreatePayment) {
+async function createPayment({ userId, title, description, price, date, categoryId }:CreatePayment) {
   return prisma.payment.create({
     data: {
+      userId,
       title, 
       description,
       price: Number(price)*100,
@@ -15,6 +16,19 @@ async function createPayment({ title, description, price, date, categoryId }:Cre
   })
 }
 
+async function getPayments(user: User) {
+  return prisma.category.findMany({
+    orderBy:{ name: 'asc' },
+    where: {
+      userId: user.id
+    },
+    include: {
+      Payment: true,
+    },
+  })
+}
+
 export default {
   createPayment,
+  getPayments,
 };

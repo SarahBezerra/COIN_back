@@ -3,9 +3,9 @@ import { Request, Response } from "express";
 import categoryService from "../services/categoryService.js";
 
 async function getCategories(req: Request, res: Response) {
-  const user = req.body;
+  const user = res.locals;
 
-  const categories:Category[] = await categoryService.getCategories();
+  const categories:Category[] = await categoryService.getCategories(user.id);
 
   res.status(200).send(categories);
 }

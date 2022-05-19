@@ -1,7 +1,11 @@
 import { prisma } from "../database.js";
 
-async function getCategories() {
-  return prisma.category.findMany();
+async function getCategories(userId: number) {
+  return prisma.category.findMany({
+    where: {
+      userId,
+    }
+  });
 }
 
 async function findCategoryByName(name:string, userId: number) {

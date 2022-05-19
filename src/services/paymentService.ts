@@ -1,6 +1,7 @@
 import { User } from "@prisma/client";
 import dotenv from "dotenv";
 import categoryRepository from "../repositories/categoryRepository.js";
+import monthlyPlanningRepository from "../repositories/monthlyPlanningRepository.js";
 import paymentRepository from "../repositories/paymentRepository.js";
 import userRepository from "../repositories/userRepository.js";
 import { notFoundError } from "../utils/errorUtils.js";
@@ -21,7 +22,17 @@ async function createPayment(paymentData: PaymentData, user: User) {
   const categoryExists = await categoryRepository.findCategoryByName(category, user.id);
   if (!categoryExists) throw notFoundError("Categoria não encontada");
 
-  await paymentRepository.createPayment({ userId:user.id, title, description, price, date, categoryId: categoryExists.id })
+  await paymentRepository.createPayment({ userId:user.id, title, description, price, date, categoryId: categoryExists.id });
+
+  const newDate = new Date(date);
+  const month = newDate.getMonth() + 1;
+  const year = newDate.getFullYear();
+
+  const planningExists = await monthlyPlanningRepository.findMonthlyPlanning(user.id, month, year);
+
+  if(planningExists) {
+    await monthlyPlanningRepository.updateMonthlyPlanning(user.id, month, year, Number(price)*100)
+  }
 }
 
 async function getPayments(user: User) {

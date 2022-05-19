@@ -16,9 +16,12 @@ model User {
   username String
   password String
 
-  Deposit  Deposit[]
-  Payment  Payment[]
-  Category Category[]
+  Deposit            Deposit[]
+  Payment            Payment[]
+  Category           Category[]
+  PlanningByCategory PlanningByCategory[]
+  MonthlyPlanning    MonthlyPlanning[]
+
   @@map("users")
 }
 
@@ -30,7 +33,9 @@ model Category {
   color  String
   icon   String
 
-  Payment Payment[]
+  Payment            Payment[]
+  PlanningByCategory PlanningByCategory[]
+
   @@map("categories")
 }
 
@@ -58,4 +63,30 @@ model Payment {
   categoryId  Int
 
   @@map("payments")
+}
+
+model PlanningByCategory {
+  id         Int      @id @default(autoincrement())
+  User       User     @relation(fields: [userId], references: [id])
+  userId     Int
+  categories Category @relation(fields: [categoryId], references: [id])
+  categoryId Int
+  month      Int
+  year       Int
+  roof       Int
+  outlay     Int
+
+  @@map("planningbycategory")
+}
+
+model MonthlyPlanning {
+  id     Int  @id @default(autoincrement())
+  User   User @relation(fields: [userId], references: [id])
+  userId Int
+  month  Int
+  year   Int
+  roof   Int
+  outlay Int
+
+  @@map("monthlyPlanning")
 }

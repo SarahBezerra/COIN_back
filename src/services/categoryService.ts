@@ -4,8 +4,8 @@ import categoryRepository from "../repositories/categoryRepository.js";
 dotenv.config();
 
 
-async function getCategories() {
-  const categories:Category[] = await categoryRepository.getCategories();
+async function getCategories(userId: number) {
+  const categories:Category[] = await categoryRepository.getCategories(userId);
 
   return categories;
 }

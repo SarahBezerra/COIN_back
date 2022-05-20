@@ -4,8 +4,25 @@ import { ensureAuthenticatedMiddleware } from "../middlewares/ensureAuthenticate
 
 const monthlyPlanningRouter = Router();
 
-monthlyPlanningRouter.get("/monthlyPlanning/:year/:month", ensureAuthenticatedMiddleware, monthlyPlanningController.getMonthlyPlanning);
-monthlyPlanningRouter.put("/monthlyPlanning/:year/:month", ensureAuthenticatedMiddleware, monthlyPlanningController.updateMonthlyPlanning);
-monthlyPlanningRouter.delete("/monthlyPlanning/:year/:month", ensureAuthenticatedMiddleware, monthlyPlanningController.deleteMonthlyPlanning);
+monthlyPlanningRouter.post(
+  "/monthlyPlanning/:year/:month",
+  ensureAuthenticatedMiddleware,
+  monthlyPlanningController.createMonthlyPlanning
+);
+monthlyPlanningRouter.get(
+  "/monthlyPlanning/:year/:month",
+  ensureAuthenticatedMiddleware,
+  monthlyPlanningController.getMonthlyPlanning
+);
+monthlyPlanningRouter.put(
+  "/monthlyPlanning/:year/:month",
+  ensureAuthenticatedMiddleware,
+  monthlyPlanningController.updateMonthlyPlanning
+);
+monthlyPlanningRouter.delete(
+  "/monthlyPlanning/:year/:month",
+  ensureAuthenticatedMiddleware,
+  monthlyPlanningController.deleteMonthlyPlanning
+);
 
 export default monthlyPlanningRouter;

@@ -6,7 +6,7 @@ dotenv.config();
 export type CreateDeposit = Omit<Deposit, "id">;
 
 async function createDeposit(deposit: CreateDeposit, user: User) {
-  await depositRepository.createDeposit({...deposit, userId: user.id});
+  await depositRepository.createDeposit({ ...deposit, userId: user.id });
 }
 
 export default {

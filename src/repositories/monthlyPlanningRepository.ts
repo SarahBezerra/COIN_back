@@ -38,8 +38,19 @@ async function updateMonthlyPlanningLimit(userId: number, year: number, month: n
   });
 }
 
+async function deleteMonthlyPlanning(userId: number, year: number, month: number) {
+  return prisma.monthlyPlanning.deleteMany({
+    where: {
+      userId,
+      month,
+      year,
+    },
+  });
+}
+
 export default {
   findMonthlyPlanning,
   updateMonthlyPlanning,
   updateMonthlyPlanningLimit,
+  deleteMonthlyPlanning,
 };

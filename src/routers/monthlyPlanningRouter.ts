@@ -6,5 +6,6 @@ const monthlyPlanningRouter = Router();
 
 monthlyPlanningRouter.get("/monthlyPlanning/:year/:month", ensureAuthenticatedMiddleware, monthlyPlanningController.getMonthlyPlanning);
 monthlyPlanningRouter.put("/monthlyPlanning/:year/:month", ensureAuthenticatedMiddleware, monthlyPlanningController.updateMonthlyPlanning);
+monthlyPlanningRouter.delete("/monthlyPlanning/:year/:month", ensureAuthenticatedMiddleware, monthlyPlanningController.deleteMonthlyPlanning);
 
 export default monthlyPlanningRouter;

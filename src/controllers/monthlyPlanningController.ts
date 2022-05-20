@@ -27,12 +27,24 @@ async function updateMonthlyPlanning(req: Request, res: Response) {
   await monthlyPlanningService.updateMonthlyPlanning(user.id, Number(year), Number(month), Number(limitInCents));
 
   res.sendStatus(200);
+}
+
+async function deleteMonthlyPlanning(req: Request, res: Response) {
+  const { user } = res.locals;
+  const { year, month } = req.params;
+  
+  validateDate(year, month);
+
+  await monthlyPlanningService.deleteMonthlyPlanning(user.id, Number(year), Number(month));
+
+  res.sendStatus(200);
 
 }
 
 export default { 
   getMonthlyPlanning,
   updateMonthlyPlanning,
+  deleteMonthlyPlanning,
 };
 
 function validateDate(year: string, month: string){

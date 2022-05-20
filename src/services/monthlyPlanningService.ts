@@ -18,8 +18,17 @@ async function createMonthlyPlanning(
     throw conflictError(`Planejamento do mês ${month} já existe`);
   }
 
-  const payments = await paymentRepository.getAllPaymentsByUser(userId);
-  const outlay = payments._sum.price;
+  const { initialDate, finalDate } = generateCurrentAndEndDate(year, month);
+  const payments = await paymentRepository.getPaymentsByMonth(
+    userId,
+    initialDate,
+    finalDate
+  );
+
+  const outlay = 0;
+  if (payments) {
+    const outlay = payments._sum.price;
+  }
 
   await monthlyPlanningRepository.createMonthlyPlanning({
     userId,
@@ -76,3 +85,24 @@ export default {
   updateMonthlyPlanning,
   deleteMonthlyPlanning,
 };
+
+function generateCurrentAndEndDate(year, reqMonth) {
+  let lastDay = 31;
+  if (reqMonth === 2) lastDay = 28;
+  else if (
+    reqMonth === 2 ||
+    reqMonth === 4 ||
+    reqMonth === 6 ||
+    reqMonth === 9 ||
+    reqMonth === 11
+  )
+    lastDay = 30;
+
+  let month = "0";
+  if (reqMonth < 10) month += reqMonth;
+
+  const initialDate = new Date(`${year}-${month}-01T00:00:00.000Z`);
+  const finalDate = new Date(`${year}-${month}-${lastDay}T00:00:00.000Z`);
+
+  return { initialDate, finalDate };
+}

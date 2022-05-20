@@ -35,13 +35,21 @@ async function getPayments(user: User) {
   });
 }
 
-async function getAllPaymentsByUser(userId: number) {
+async function getPaymentsByMonth(
+  userId: number,
+  initialDate: Date,
+  finalDate: Date
+) {
   return prisma.payment.aggregate({
-    where: {
-      userId,
-    },
     _sum: {
       price: true,
+    },
+    where: {
+      userId,
+      date: {
+        gte: new Date(initialDate),
+        lte: new Date(finalDate),
+      },
     },
   });
 }
@@ -49,5 +57,5 @@ async function getAllPaymentsByUser(userId: number) {
 export default {
   createPayment,
   getPayments,
-  getAllPaymentsByUser,
+  getPaymentsByMonth,
 };

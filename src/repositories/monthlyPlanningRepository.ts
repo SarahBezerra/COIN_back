@@ -25,7 +25,21 @@ async function updateMonthlyPlanning(userId: number, month: number, year: number
   });
 }
 
+async function updateMonthlyPlanningLimit(userId: number, year: number, month: number, limit: number) {
+  return prisma.monthlyPlanning.updateMany({
+    where: {
+      userId,
+      month,
+      year,
+    },
+    data: {
+      roof: limit,
+    }
+  });
+}
+
 export default {
   findMonthlyPlanning,
   updateMonthlyPlanning,
+  updateMonthlyPlanningLimit,
 };

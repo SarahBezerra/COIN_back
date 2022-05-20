@@ -6,6 +6,11 @@ async function getMonthlyPlanning(userId: number, year: number, month: number)  
   return planning;
 }
 
+async function updateMonthlyPlanning(userId: number, year: number, month: number, limit: number)  {
+  await monthlyPlanningRepository.updateMonthlyPlanningLimit(userId, year, month, limit);
+}
+
 export default {
   getMonthlyPlanning,
+  updateMonthlyPlanning,
 };

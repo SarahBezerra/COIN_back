@@ -4,6 +4,7 @@ import { ensureAuthenticatedMiddleware } from "../middlewares/ensureAuthenticate
 
 const monthlyPlanningRouter = Router();
 
-monthlyPlanningRouter.get("/getMonthlyPlanning/:year/:month", ensureAuthenticatedMiddleware, monthlyPlanningController.getMonthlyPlanning);
+monthlyPlanningRouter.get("/monthlyPlanning/:year/:month", ensureAuthenticatedMiddleware, monthlyPlanningController.getMonthlyPlanning);
+monthlyPlanningRouter.put("/monthlyPlanning/:year/:month", ensureAuthenticatedMiddleware, monthlyPlanningController.updateMonthlyPlanning);
 
 export default monthlyPlanningRouter;

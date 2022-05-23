@@ -19,7 +19,17 @@ async function deleteCategory(req: Request, res: Response) {
   res.sendStatus(200);
 }
 
+async function createCategory(req: Request, res: Response) {
+  const { user } = res.locals;
+  const data = req.body;
+
+  await categoryService.createCategory({ ...data, userId: user.id });
+
+  res.sendStatus(201);
+}
+
 export default {
   getCategories,
   deleteCategory,
+  createCategory,
 };

@@ -25,7 +25,23 @@ async function deleteCategory(userId: number, categoryId: number) {
   await categoryRepository.deleteCategory(categoryId);
 }
 
+export type CreateCategory = Omit<Category, "id">;
+
+async function createCategory(data: CreateCategory) {
+  const category = await categoryRepository.findCategoryByName(
+    data.name,
+    data.userId
+  );
+
+  if (category) {
+    throw conflictError(`Já existe uma categoria com o nome ${data.name}`);
+  }
+
+  await categoryRepository.createCategory(data);
+}
+
 export default {
   getCategories,
   deleteCategory,
+  createCategory,
 };

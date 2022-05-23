@@ -1,4 +1,5 @@
 import { prisma } from "../database.js";
+import { CreateCategory } from "../services/categoryService.js";
 
 async function getCategories(userId: number) {
   return prisma.category.findMany({
@@ -29,6 +30,17 @@ async function deleteCategory(id: number) {
   return prisma.category.delete({
     where: {
       id,
+    },
+  });
+}
+
+async function createCategory({ userId, name, color, icon }: CreateCategory) {
+  return prisma.category.create({
+    data: {
+      name,
+      userId,
+      color,
+      icon,
     },
   });
 }
@@ -70,4 +82,5 @@ export default {
   createDefaultCategories,
   findCategoryById,
   deleteCategory,
+  createCategory,
 };

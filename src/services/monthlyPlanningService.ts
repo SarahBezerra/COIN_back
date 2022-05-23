@@ -19,15 +19,16 @@ async function createMonthlyPlanning(
   }
 
   const { initialDate, finalDate } = generateCurrentAndEndDate(year, month);
+
   const payments = await paymentRepository.getPaymentsByMonth(
     userId,
     initialDate,
     finalDate
   );
 
-  const outlay = 0;
+  let outlay: number = 0;
   if (payments) {
-    const outlay = payments._sum.price;
+    outlay = payments._sum.price;
   }
 
   await monthlyPlanningRepository.createMonthlyPlanning({

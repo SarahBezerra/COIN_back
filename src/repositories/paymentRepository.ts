@@ -54,8 +54,21 @@ async function getPaymentsByMonth(
   });
 }
 
+async function getSumOfPaymentsByCategory(userId: number, categoryId: number) {
+  return prisma.payment.aggregate({
+    _sum: {
+      price: true,
+    },
+    where: {
+      userId,
+      categoryId,
+    },
+  });
+}
+
 export default {
   createPayment,
   getPayments,
   getPaymentsByMonth,
+  getSumOfPaymentsByCategory,
 };

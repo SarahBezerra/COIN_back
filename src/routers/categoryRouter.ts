@@ -4,6 +4,15 @@ import { ensureAuthenticatedMiddleware } from "../middlewares/ensureAuthenticate
 
 const categoryRouter = Router();
 
-categoryRouter.get("/categories", ensureAuthenticatedMiddleware, categoryController.getCategories);
+categoryRouter.get(
+  "/categories",
+  ensureAuthenticatedMiddleware,
+  categoryController.getCategories
+);
+categoryRouter.delete(
+  "/categories/:id",
+  ensureAuthenticatedMiddleware,
+  categoryController.deleteCategory
+);
 
 export default categoryRouter;

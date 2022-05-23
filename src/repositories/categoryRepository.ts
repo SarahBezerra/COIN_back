@@ -4,17 +4,33 @@ async function getCategories(userId: number) {
   return prisma.category.findMany({
     where: {
       userId,
-    }
+    },
   });
 }
 
-async function findCategoryByName(name:string, userId: number) {
+async function findCategoryByName(name: string, userId: number) {
   return prisma.category.findFirst({
     where: {
       userId,
       name,
-    }
-  })
+    },
+  });
+}
+
+async function findCategoryById(id: number) {
+  return prisma.category.findFirst({
+    where: {
+      id,
+    },
+  });
+}
+
+async function deleteCategory(id: number) {
+  return prisma.category.delete({
+    where: {
+      id,
+    },
+  });
 }
 
 async function createDefaultCategories(userId: number) {
@@ -29,14 +45,14 @@ async function createDefaultCategories(userId: number) {
       {
         name: "Alimentação",
         userId,
-        color: "8B0000",
+        color: "ed2f2f",
         icon: "fast-food-outline",
       },
       {
-        name: "Estudos",
+        name: "Outros",
         userId,
         color: "FFA500",
-        icon: "library-outline",
+        icon: "medical-outline",
       },
       {
         name: "Trasporte",
@@ -44,7 +60,7 @@ async function createDefaultCategories(userId: number) {
         color: "008B8B",
         icon: "bus-outline",
       },
-    ]
+    ],
   });
 }
 
@@ -52,4 +68,6 @@ export default {
   getCategories,
   findCategoryByName,
   createDefaultCategories,
+  findCategoryById,
+  deleteCategory,
 };

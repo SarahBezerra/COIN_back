@@ -26,8 +26,8 @@ async function createMonthlyPlanning(
     finalDate
   );
 
-  let outlay: number = 0;
-  if (payments) {
+  let outlay = 0;
+  if (payments._sum.price) {
     outlay = payments._sum.price;
   }
 
